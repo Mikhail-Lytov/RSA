@@ -6,8 +6,6 @@ public class key_generation {
     private long second_element;
     private long derivative;
     private long euler_function;
-    private long e;
-    private long lcm_element;
     private long open_exhibitor;
     private long close_exhibitor;
     public key_generation(long first_element, long second_element){
@@ -39,7 +37,7 @@ public class key_generation {
             close_exhibitor ++;
         }
     }
-    private boolean simle_number(long number){
+    /*private boolean simle_number(long number){
         for (long j = 2; j < number; j++) {
             if (number % j == 0) {
                 return false;
@@ -47,14 +45,14 @@ public class key_generation {
         }
 
         return true;
-    }
+    }*/
     private long open_exhibitor(){
         long open_exhibitor = this.euler_function - 1;
         //long euler_function = this.euler_function;
         boolean flag = true;
         int size_element = 0;
-        ArrayList<Long> list_simple_number = new ArrayList<Long>(1000);
-        while (open_exhibitor > 1 && size_element <= 1000){
+        ArrayList<Long> list_simple_number = new ArrayList<Long>(1001);
+        while (open_exhibitor > 1 && size_element <= 10){
 
             for (long i = 2; i<= euler_function;i++){
                 if(open_exhibitor % i == 0 && euler_function % i == 0) {
@@ -63,15 +61,16 @@ public class key_generation {
                 }
             }
             if (flag){
-                System.out.println("true");
+                //System.out.println("true");
                 size_element ++;
                 list_simple_number.add(open_exhibitor);
-                System.out.println(list_simple_number);
+                //System.out.println(list_simple_number);
             }
             flag = true;
             open_exhibitor--;
 
         }
+        System.out.println(list_simple_number);
         /*while (open_exhibitor > 1){
             for (long i = 2; i <= euler_function; i++) {
                 if (open_exhibitor % i == 0 && euler_function % i == 0) {

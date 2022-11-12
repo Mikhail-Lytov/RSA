@@ -16,8 +16,8 @@ public class Input_data{
     }
     private void random_simple_number()throws IOException {
         generation_simple_number gen = new generation_simple_number();
-        long first_prime_number = gen.getFirst_number();
-        long second_prime_number = gen.getSecond_number();
+        first_prime_number = gen.getFirst_number();
+        second_prime_number = gen.getSecond_number();
         System.out.println("первое число: " + first_prime_number);
         System.out.println("второе число: " + second_prime_number);
     }

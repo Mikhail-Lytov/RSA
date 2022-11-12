@@ -25,13 +25,14 @@ public class generation_simple_number {
         Random random = new Random();
         String element = data[random.nextInt(0,8363 / 6 % 100000)];
         first_number = Long.parseLong(element);
+        //System.out.println(first_number);
     }
     private void Second_number(){
         Random random = new Random();
         boolean flag = true;
 
         while (flag){
-            String element = data[random.nextInt(0,470585 / 8 % 100000)];
+            String element = data[random.nextInt(0,8363 / 6 % 100000)];
             second_number = Long.parseLong(element);
             if (second_number != first_number){
                 flag = false;
