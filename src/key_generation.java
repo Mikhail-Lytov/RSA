@@ -19,6 +19,17 @@ public class key_generation {
         this.close_exhibitor = close_exhibitor();
 
     }
+    public key_generation(long first_element, long second_element, boolean speed){
+        this.first_element = first_element;
+        this.second_element = second_element;
+        this.derivative = first_element * second_element;
+        this.euler_function = (first_element - 1) * (second_element - 1);
+        if (speed && (derivative % 65537 != 0)) {
+            this.open_exhibitor = 65537;
+        }else{ this.open_exhibitor = open_exhibitor();}
+        this.close_exhibitor = close_exhibitor();
+
+    }
     private long close_exhibitor(){
         long close_exhibitor = 1;
         while (true){
@@ -41,9 +52,27 @@ public class key_generation {
         long open_exhibitor = this.euler_function - 1;
         //long euler_function = this.euler_function;
         boolean flag = true;
+        int size_element = 0;
         ArrayList<Long> list_simple_number = new ArrayList<Long>(1000);
+        while (open_exhibitor > 1 && size_element <= 1000){
 
-        while (open_exhibitor > 1){
+            for (long i = 2; i<= euler_function;i++){
+                if(open_exhibitor % i == 0 && euler_function % i == 0) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                System.out.println("true");
+                size_element ++;
+                list_simple_number.add(open_exhibitor);
+                System.out.println(list_simple_number);
+            }
+            flag = true;
+            open_exhibitor--;
+
+        }
+        /*while (open_exhibitor > 1){
             for (long i = 2; i <= euler_function; i++) {
                 if (open_exhibitor % i == 0 && euler_function % i == 0) {
                     flag = false;
@@ -59,7 +88,7 @@ public class key_generation {
             }
             flag = true;
             open_exhibitor--;
-        }
+        }*/
 
         Random r = new Random();
         open_exhibitor = list_simple_number.get(r.nextInt(0, list_simple_number.size()));
