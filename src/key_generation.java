@@ -1,108 +1,59 @@
-import java.util.ArrayList;
+import java.math.BigInteger;
 import java.util.Random;
 
+import static java.math.BigInteger.probablePrime;
+
 public class key_generation {
-    private long first_element;
-    private long second_element;
-    private long derivative;
-    private long euler_function;
-    private long open_exhibitor;
-    private long close_exhibitor;
-    public key_generation(long first_element, long second_element){
-        this.first_element = first_element;
-        this.second_element = second_element;
-        this.derivative = first_element * second_element;
-        this.euler_function = (first_element - 1) * (second_element - 1);
-        this.open_exhibitor = open_exhibitor();
-        this.close_exhibitor = close_exhibitor();
+    private BigInteger open_exhibitor = BigInteger.ONE;
+    private BigInteger close_exhibitor;
+    private BigInteger euler_function;
+    private int maxleng = 1024;
+    private BigInteger second_number;
+    private BigInteger derivative;
+    private BigInteger first_number;
+
+    public key_generation(){
+        first_number = probablePrime(1024,new Random());
+        second_number = probablePrime(1024, new Random());
+        derivative = first_number.multiply(second_number);
+        BigInteger first_number_sub_1 = first_number.subtract(BigInteger.ONE);
+        BigInteger second_number_sub_1 = second_number.subtract(BigInteger.ONE);
+        euler_function = first_number_sub_1.multiply(second_number_sub_1);
+        //System.out.println(second_number + "\n" + first_number);
+        gen();
+        //BigInteger open_exhibitor = new BigInteger(String.valueOf(65537));
+        //System.out.println("open " + open_exhibitor);
+        //System.out.println("close " + close_exhibitor);
 
     }
-    public key_generation(long first_element, long second_element, boolean speed){
-        this.first_element = first_element;
-        this.second_element = second_element;
-        this.derivative = first_element * second_element;
-        this.euler_function = (first_element - 1) * (second_element - 1);
-        if (speed && (derivative % 65537 != 0)) {
-            this.open_exhibitor = 65537;
-        }else{ this.open_exhibitor = open_exhibitor();}
-        this.close_exhibitor = close_exhibitor();
+    private void gen(){
+        open_exhibitor = BigInteger.probablePrime(maxleng / 2, new Random());
+        while (euler_function.gcd(open_exhibitor).compareTo(BigInteger.ONE) > 0 && open_exhibitor.compareTo(euler_function) < 0){
+            open_exhibitor.add(BigInteger.ONE);
+        }
+
+        close_exhibitor = open_exhibitor.modInverse(euler_function);
+
+        //System.out.println(open_exhibitor);
 
     }
-    private long close_exhibitor(){
-        long close_exhibitor = 1;
-        while (true){
-            if((close_exhibitor * open_exhibitor)%euler_function == 1){
-                return close_exhibitor;
-            }
-            close_exhibitor ++;
-        }
-    }
-    /*private boolean simle_number(long number){
-        for (long j = 2; j < number; j++) {
-            if (number % j == 0) {
-                return false;
-            }
-        }
-
-        return true;
-    }*/
-    private long open_exhibitor(){
-        long open_exhibitor = this.euler_function - 1;
-        //long euler_function = this.euler_function;
-        boolean flag = true;
-        int size_element = 0;
-        ArrayList<Long> list_simple_number = new ArrayList<Long>(1001);
-        while (open_exhibitor > 1 && size_element <= 10){
-
-            for (long i = 2; i<= euler_function;i++){
-                if(open_exhibitor % i == 0 && euler_function % i == 0) {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag){
-                //System.out.println("true");
-                size_element ++;
-                list_simple_number.add(open_exhibitor);
-                //System.out.println(list_simple_number);
-            }
-            flag = true;
-            open_exhibitor--;
-
-        }
-        System.out.println(list_simple_number);
-        /*while (open_exhibitor > 1){
-            for (long i = 2; i <= euler_function; i++) {
-                if (open_exhibitor % i == 0 && euler_function % i == 0) {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag){
-                System.out.println("true");
-                if (simle_number(open_exhibitor)){
-                    list_simple_number.add(open_exhibitor);
-                }
-                System.out.println(list_simple_number);
-            }
-            flag = true;
-            open_exhibitor--;
-        }*/
-
-        Random r = new Random();
-        open_exhibitor = list_simple_number.get(r.nextInt(0, list_simple_number.size()));
-        System.out.println(open_exhibitor);
+    public BigInteger getOpen_exhibitor(){
         return open_exhibitor;
     }
-    public Close_key get_close_key(){
 
-        return new Close_key(close_exhibitor, derivative);
+    public BigInteger getClose_exhibitor(){
+        return close_exhibitor;
+    }
+    public BigInteger getDerivative(){
+        return derivative;
+    }
+    public BigInteger getFirst_number(){
+        return first_number;
+    }
+    public BigInteger getSecond_number(){
+        return second_number;
     }
 
-
-    public Open_key get_open_key(){
-        return new Open_key(open_exhibitor, derivative);
-    }
 
 
 
