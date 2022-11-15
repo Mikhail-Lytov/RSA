@@ -30,4 +30,10 @@ public class key_output {
         output.write("first number: " + first + "\nsecond number: " + second);
         output.close();
     }
+    public String path_open_key(){
+        return "open key.txt";
+    }
+    public String path_close_key(){
+        return "close key.txt";
+    }
 }

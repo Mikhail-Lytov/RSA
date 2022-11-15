@@ -1,9 +1,10 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 
-public class signature_verification {
+public class Signature_verification {
     private String name_file_signature_file;
     private String name_file_open_key;
     private BigInteger signature;
@@ -11,14 +12,14 @@ public class signature_verification {
     private BigInteger open_exhibitor;
     private BigInteger derivative;
 
-    public signature_verification(String name_file_signature_file, String name_file_open_key) throws IOException {
+    public Signature_verification(String name_file_signature_file, String name_file_open_key) throws IOException {
         this.name_file_signature_file = name_file_signature_file;
         this.name_file_open_key = name_file_open_key;
         data_file_signature_file();
         data_name_file_open_key();
 
     }
-    public String check(){
+    public String check() throws IOException {
         String md_5_hex;
         BigInteger md5_int;
         BigInteger signature_check;
@@ -29,6 +30,9 @@ public class signature_verification {
         if ((md5_int.compareTo(derivative)) <= -1){
             check = signature.modPow(open_exhibitor, derivative);
             if((check.compareTo(md5_int)) == 0){
+                FileWriter file = new FileWriter(name_file_signature_file);
+                file.write(message);
+                file.close();
                 return "сошлось";
             }
         }
