@@ -63,7 +63,7 @@ public class Frame extends JFrame {
         open_key_file.addActionListener(new open_key());
 
         getContentPane().add(panel);
-        setPreferredSize(new Dimension(600, 300));
+        setPreferredSize(new Dimension(800, 300));
         pack();
         setLocationRelativeTo(null);
         setVisible(true);

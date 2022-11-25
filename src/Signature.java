@@ -28,14 +28,13 @@ public class Signature {
             line_sum = line_sum.substring(0,line_sum.length() - 1);
             //System.out.print(line_sum);
             //System.out.println("все");
-            md5custom md5 = new md5custom();
-            String md5_x = md5.md5Custom(line_sum);
-            BigInteger md5_10 = md5.md_5_10(md5_x);
+            SHACustom sha = new SHACustom(line_sum);
+            BigInteger sha_int = sha.toBiginteger_SHA();
             //System.out.println(line_sum);
             //System.out.println(md5_x);
-            //System.out.println(md5_10);
-            if(md5_10.compareTo(derivative) <= -1){
-                signature = md5_10.modPow(close_key,derivative);
+            //System.out.println(sha_int);
+            if(sha_int.compareTo(derivative) <= -1){
+                signature = sha_int.modPow(close_key,derivative);
                 //System.out.println(signature);
                 FileWriter file_signature = new FileWriter(name_file_txt);
                 file_signature.write(line_sum + "\n" + signature.toString());

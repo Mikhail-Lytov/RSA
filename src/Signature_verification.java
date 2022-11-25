@@ -20,16 +20,12 @@ public class Signature_verification {
 
     }
     public String check() throws IOException {
-        String md_5_hex;
-        BigInteger md5_int;
-        BigInteger signature_check;
-        md5custom md5 = new md5custom();
-        md_5_hex = md5.md5Custom(message);
-        md5_int = md5.md_5_10(md_5_hex);
+        SHACustom sha = new SHACustom(message);
+        BigInteger sha_int = sha.toBiginteger_SHA();
         BigInteger check = new BigInteger("0");
-        if ((md5_int.compareTo(derivative)) <= -1){
+        if ((sha_int.compareTo(derivative)) <= -1){
             check = signature.modPow(open_exhibitor, derivative);
-            if((check.compareTo(md5_int)) == 0){
+            if((check.compareTo(sha_int)) == 0){
                 FileWriter file = new FileWriter(name_file_signature_file);
                 file.write(message);
                 file.close();
