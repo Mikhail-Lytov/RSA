@@ -26,20 +26,14 @@ public class Signature {
             file_txt_.close();
             buf_txt.close();
             line_sum = line_sum.substring(0,line_sum.length() - 1);
-            //System.out.print(line_sum);
-            //System.out.println("все");
-            md5custom md5 = new md5custom();
-            String md5_x = md5.md5Custom(line_sum);
-            BigInteger md5_10 = md5.md_5_10(md5_x);
-            //System.out.println(line_sum);
-            //System.out.println(md5_x);
-            //System.out.println(md5_10);
-            if(md5_10.compareTo(derivative) <= -1){
-                signature = md5_10.modPow(close_key,derivative);
-                //System.out.println(signature);
+
+            SHACustom sha = new SHACustom(line_sum);
+            BigInteger sha_int = sha.toBiginteger_SHA();
+
+            if(sha_int.compareTo(derivative) <= -1){
+                signature = sha_int.modPow(close_key,derivative);
                 FileWriter file_signature = new FileWriter(name_file_txt);
                 file_signature.write(line_sum + "\n" + signature.toString());
-                //file_signature.write(signature.toString());
                 file_signature.close();
 
             }else{System.out.println("Ключ мал");}
@@ -52,7 +46,7 @@ public class Signature {
             FileReader file_txt = new FileReader(name_file_close_key);
             BufferedReader buf = new BufferedReader(file_txt);
             String line_1 = buf.readLine();
-            System.out.println(line_1);
+            //System.out.println(line_1);
             String line_2 = buf.readLine();
             line_1 = line_1.substring(16);
             line_2 = line_2.substring(11);

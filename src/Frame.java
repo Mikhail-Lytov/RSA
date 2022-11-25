@@ -63,7 +63,7 @@ public class Frame extends JFrame {
         open_key_file.addActionListener(new open_key());
 
         getContentPane().add(panel);
-        setPreferredSize(new Dimension(600, 300));
+        setPreferredSize(new Dimension(800, 300));
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -80,9 +80,14 @@ public class Frame extends JFrame {
                 }
             }else {
                 try {
+                    Long start = System.currentTimeMillis();
                     Signature_verification check = new Signature_verification(path_text_signature, path_open_key);
+                    Long finish = System.currentTimeMillis();
+
+                    System.out.println("Время проверки подписи " + (finish - start) + " миллисекунд");
+
                     String text_check_file = check.check();
-                    JOptionPane.showConfirmDialog(null, text_check_file, "Резульат", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showConfirmDialog(null, text_check_file, "Результат", JOptionPane.PLAIN_MESSAGE);
 
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -140,7 +145,6 @@ public class Frame extends JFrame {
                     //System.out.println("теперь тут");
                     path_close_file_file = file.getCanonicalPath();
                     //System.out.println(a);
-
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -162,7 +166,11 @@ public class Frame extends JFrame {
                 }
             }else{
                 try {
+                    Long start = System.currentTimeMillis();
                     Signature signature_class = new Signature(path_text_file,path_close_file_file);
+                    Long finish = System.currentTimeMillis();
+                    System.out.println("Время подписи: " + (finish - start) + " миллисекунд");
+                    JOptionPane.showConfirmDialog(null, "Файл подписан", "Резульат операции", JOptionPane.PLAIN_MESSAGE);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -194,7 +202,14 @@ public class Frame extends JFrame {
     class file_generation implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            long start;
+            long finish;
+            start = System.currentTimeMillis();
             key_generation key = new key_generation();
+            finish = System.currentTimeMillis();
+
+            System.out.println("Время генерации: " + (finish - start));
+
             BigInteger open_exhibitor = key.getOpen_exhibitor();
             BigInteger close_exhibitor = key.getClose_exhibitor();
             BigInteger derivative = key.getDerivative();

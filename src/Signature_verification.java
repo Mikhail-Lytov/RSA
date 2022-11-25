@@ -20,23 +20,19 @@ public class Signature_verification {
 
     }
     public String check() throws IOException {
-        String md_5_hex;
-        BigInteger md5_int;
-        BigInteger signature_check;
-        md5custom md5 = new md5custom();
-        md_5_hex = md5.md5Custom(message);
-        md5_int = md5.md_5_10(md_5_hex);
+        SHACustom sha = new SHACustom(message);
+        BigInteger sha_int = sha.toBiginteger_SHA();
         BigInteger check = new BigInteger("0");
-        if ((md5_int.compareTo(derivative)) <= -1){
+        if ((sha_int.compareTo(derivative)) <= -1){
             check = signature.modPow(open_exhibitor, derivative);
-            if((check.compareTo(md5_int)) == 0){
+            if((check.compareTo(sha_int)) == 0){
                 FileWriter file = new FileWriter(name_file_signature_file);
                 file.write(message);
                 file.close();
-                return "сошлось";
+                return "подлинный";
             }
         }
-        return "не сошлось";
+        return "фальсификация";
     }
     private void data_name_file_open_key()throws IOException{
         FileReader file_open_key = new FileReader(name_file_open_key);
@@ -45,10 +41,9 @@ public class Signature_verification {
         String derivative = buf.readLine();
         open_exhibitor = open_exhibitor.substring(15);
         derivative = derivative.substring(11);
-        System.out.println("open" + open_exhibitor);
         this.open_exhibitor = new  BigInteger(open_exhibitor);
         this.derivative = new BigInteger(derivative);
-        //System.out.println(open_exhibitor + "\n" + derivative);
+
         buf.close();
         file_open_key.close();
     }
@@ -62,8 +57,7 @@ public class Signature_verification {
             signature = line;
         }
         message = message.substring(0, message.length() - signature.length() - 2);
-        System.out.println("text" + message);
-        System.out.println("sign" + signature);
+
         this.signature = new BigInteger(signature);
         buf_signature_file.close();
         read_signature_file.close();
