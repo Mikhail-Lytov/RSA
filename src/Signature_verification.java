@@ -20,8 +20,8 @@ public class Signature_verification {
 
     }
     public String check() throws IOException {
-        SHACustom sha = new SHACustom(message);
-        BigInteger sha_int = sha.toBiginteger_SHA();
+        SHA sha = new SHA(message);
+        BigInteger sha_int = sha.getInteger();
         BigInteger check = new BigInteger("0");
         if ((sha_int.compareTo(derivative)) <= -1){
             check = signature.modPow(open_exhibitor, derivative);

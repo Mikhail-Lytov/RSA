@@ -27,8 +27,14 @@ public class Signature {
             buf_txt.close();
             line_sum = line_sum.substring(0,line_sum.length() - 1);
 
-            SHACustom sha = new SHACustom(line_sum);
-            BigInteger sha_int = sha.toBiginteger_SHA();
+            long start = System.currentTimeMillis();
+
+            SHA sha = new SHA(line_sum);
+
+            long finish = System.currentTimeMillis();
+            System.out.println("Время работы хэш-функции: " + (finish - start));
+
+            BigInteger sha_int = sha.getInteger();
 
             if(sha_int.compareTo(derivative) <= -1){
                 signature = sha_int.modPow(close_key,derivative);
