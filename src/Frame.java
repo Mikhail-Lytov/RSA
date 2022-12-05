@@ -72,7 +72,7 @@ public class Frame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(path_open_key == null && path_text_signature == null){
+            if(path_open_key == null || path_text_signature == null){
                 if(path_open_key == null){
                     JOptionPane.showConfirmDialog(null, "Не выбран файл c открытым ключём", "ERROR", JOptionPane.PLAIN_MESSAGE);
                 } else if (path_text_signature == null) {
@@ -157,7 +157,7 @@ public class Frame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(path_text_file == null && path_close_file_file == null) {
+            if(path_text_file == null || path_close_file_file == null) {
                 if (path_text_file == null) {
                     JOptionPane.showConfirmDialog(null, "Не выбран файл, который нужно подписать", "ERROR", JOptionPane.PLAIN_MESSAGE);
                 } else if (path_close_file_file == null) {

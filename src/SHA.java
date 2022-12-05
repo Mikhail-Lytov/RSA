@@ -26,8 +26,7 @@ public class SHA {
         //Добавляем едиинцу
         byte_text = add_one(byte_text);
 
-        // Тут мы дополняем массив, нужно будет позже сделать универсальным
-        //Добавляем код нулями, но пока что только для одного блока
+        // Тут мы дополняем массив
         byte_text = add_zero(byte_text);
 
         for (int i = 0; i < number_blocks; i++) {
@@ -66,9 +65,7 @@ public class SHA {
         for (int i = 0; i < line.length; i++){
             byte_text[Math.toIntExact(size_array - 1 - i)] = line[line.length - 1 - i];
         }
-        //System.out.println(Arrays.toString(byte_text));
-        //byte_text[Math.toIntExact(size_array - 1)] = (byte) ((length_source_array - 1) * 8);
-        //System.out.println(Arrays.toString(byte_text));
+
         number_blocks = (int) (size_array / 64);
         return byte_text;
 
