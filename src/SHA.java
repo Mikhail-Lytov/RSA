@@ -178,7 +178,7 @@ public class SHA {
             SHA_int = Long.parseLong(element_str, 16);
             element_str = SHA_int.toString();
             element = new BigInteger(element_str);
-            element = element.multiply(step_16.pow(64 - i - 1));
+            element = element.multiply(step_16.pow(hex.length() - i - 1));
             result =  result.add(element);
         }
         return result;
