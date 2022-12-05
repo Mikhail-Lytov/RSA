@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigInteger;
 
@@ -80,15 +82,22 @@ public class Frame extends JFrame {
                 }
             }else {
                 try {
-                    Long start = System.currentTimeMillis();
-                    Signature_verification check = new Signature_verification(path_text_signature, path_open_key);
-                    Long finish = System.currentTimeMillis();
+                    FileReader file_open_key = new FileReader(path_open_key);
+                    BufferedReader buf = new BufferedReader(file_open_key);
+                    String open_exhibitor = buf.readLine();
+                    open_exhibitor = open_exhibitor.substring(0,15);
+                    if(open_exhibitor.equals("open exhibitor:")) {
+                        Long start = System.currentTimeMillis();
+                        Signature_verification check = new Signature_verification(path_text_signature, path_open_key);
+                        Long finish = System.currentTimeMillis();
 
-                    System.out.println("Время проверки подписи " + (finish - start) + " миллисекунд");
+                        System.out.println("Время проверки подписи " + (finish - start) + " миллисекунд");
 
-                    String text_check_file = check.check();
-                    JOptionPane.showConfirmDialog(null, text_check_file, "Результат", JOptionPane.PLAIN_MESSAGE);
-
+                        String text_check_file = check.check();
+                        JOptionPane.showConfirmDialog(null, text_check_file, "Результат", JOptionPane.PLAIN_MESSAGE);
+                    }else{
+                        JOptionPane.showConfirmDialog(null, "Не выбран файл, c открытым ключём", "ERROR", JOptionPane.PLAIN_MESSAGE);
+                    }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -166,11 +175,25 @@ public class Frame extends JFrame {
                 }
             }else{
                 try {
-                    Long start = System.currentTimeMillis();
-                    Signature signature_class = new Signature(path_text_file,path_close_file_file);
-                    Long finish = System.currentTimeMillis();
-                    System.out.println("Время подписи: " + (finish - start) + " миллисекунд");
-                    JOptionPane.showConfirmDialog(null, "Файл подписан", "Резульат операции", JOptionPane.PLAIN_MESSAGE);
+                    FileReader file_txt = new FileReader(path_close_file_file);
+                    BufferedReader buf = new BufferedReader(file_txt);
+                    String line_1 = buf.readLine();
+                    try {
+
+                        if (line_1.substring(0, 16).equals("close exhibitor:")) {
+                            buf.close();
+                            file_txt.close();
+                            Long start = System.currentTimeMillis();
+                            Signature signature_class = new Signature(path_text_file, path_close_file_file);
+                            Long finish = System.currentTimeMillis();
+                            System.out.println("Время подписи: " + (finish - start) + " миллисекунд");
+                            JOptionPane.showConfirmDialog(null, "Файл подписан", "Резульат операции", JOptionPane.PLAIN_MESSAGE);
+                        } else {
+                            JOptionPane.showConfirmDialog(null, "Некоректный файл с закрытым ключём", "Error", JOptionPane.PLAIN_MESSAGE);
+                        }
+                    }catch (StringIndexOutOfBoundsException ex){
+                        JOptionPane.showConfirmDialog(null, "Некоректный файл с закрытым ключём", "Error", JOptionPane.PLAIN_MESSAGE);
+                    }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }

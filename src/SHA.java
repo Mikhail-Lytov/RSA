@@ -21,12 +21,11 @@ public class SHA {
             0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
             0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2};
     public SHA(String text){
-        //шаг 1
+
         byte[] byte_text = String_in_Bytes(text);
-        //Добавляем едиинцу
+
         byte_text = add_one(byte_text);
 
-        // Тут мы дополняем массив
         byte_text = add_zero(byte_text);
 
         for (int i = 0; i < number_blocks; i++) {
@@ -93,7 +92,6 @@ public class SHA {
             long s_1 = Integer.rotateRight(array_int[j - 2], 17) ^ Integer.rotateRight(array_int[j - 2], 19) ^ (array_int[j - 2] >>> 10);
             long result = (array_int[j-16] + s_0 + array_int[j - 7] + s_1) % twe_32;
             array_int[j] = (int) result;
-            //System.out.println("arr[" + j + "]: " +Integer.toBinaryString(array_int[j]));
         }
         return array_int;
     }
@@ -175,7 +173,7 @@ public class SHA {
         String element_str;
         Long SHA_int;
         BigInteger step_16 = new BigInteger(String.valueOf(16));
-        for(int i = 0; i < 64; i++){
+        for(int i = 0; i < hex.length(); i++){
             element_str = hex.substring(i, i+1);
             SHA_int = Long.parseLong(element_str, 16);
             element_str = SHA_int.toString();
@@ -184,5 +182,8 @@ public class SHA {
             result =  result.add(element);
         }
         return result;
+    }
+    public int getNumber_blocks(){
+        return number_blocks;
     }
 }
