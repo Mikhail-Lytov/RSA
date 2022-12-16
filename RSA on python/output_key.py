@@ -1,6 +1,6 @@
 from generation_key import generation_key
 
-class output_ket:
+class output_key:
     def __init__(self):
         key = generation_key()
         open_exhibitor, close_exhibitor, multiplication = key.return_key()
@@ -19,4 +19,4 @@ class output_ket:
         file.close()
 
 if __name__ == "__main__":
-    output_ket()
+    output_key()
