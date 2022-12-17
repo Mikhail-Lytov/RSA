@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
+import time
+
+from PyQt5.QtWidgets import QMessageBox
 
 from output_key import output_key
 from Generetion_Simple_Number import Prime_Number
@@ -131,9 +134,9 @@ class Ui_MainWindow(object):
         self.frame_input_open_file.setObjectName("frame_input_open_file")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.frame_input_open_file)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.label_path_open_key = QtWidgets.QLabel(self.frame_input_open_file)
-        self.label_path_open_key.setObjectName("label_path_open_key")
-        self.horizontalLayout_5.addWidget(self.label_path_open_key)
+        self.label_path_close_key = QtWidgets.QLabel(self.frame_input_open_file)
+        self.label_path_close_key.setObjectName("label_path_close_key")
+        self.horizontalLayout_5.addWidget(self.label_path_close_key)
         self.line_path_open_key = QtWidgets.QLineEdit(self.frame_input_open_file)
         self.line_path_open_key.setObjectName("line_path_open_key")
         self.horizontalLayout_5.addWidget(self.line_path_open_key)
@@ -180,9 +183,9 @@ class Ui_MainWindow(object):
         self.frame_input_close_key_file.setObjectName("frame_input_close_key_file")
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.frame_input_close_key_file)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        self.label_path_close_key = QtWidgets.QLabel(self.frame_input_close_key_file)
-        self.label_path_close_key.setObjectName("label_path_close_key")
-        self.horizontalLayout_7.addWidget(self.label_path_close_key)
+        self.label_path_open_key = QtWidgets.QLabel(self.frame_input_close_key_file)
+        self.label_path_open_key.setObjectName("label_path_open_key")
+        self.horizontalLayout_7.addWidget(self.label_path_open_key)
         self.line_path_close_key = QtWidgets.QLineEdit(self.frame_input_close_key_file)
         self.line_path_close_key.setObjectName("line_path_close_key")
         self.horizontalLayout_7.addWidget(self.line_path_close_key)
@@ -237,11 +240,11 @@ class Ui_MainWindow(object):
         self.label_second_number.setText(_translate("MainWindow", "второе число"))
         self.Button_key_generation.setText(_translate("MainWindow", "Генерировать"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.generetion_key_page), _translate("MainWindow", "Генерация ключей"))
-        self.label_path_open_key.setText(_translate("MainWindow", "Файл с открытым ключём"))
+        self.label_path_close_key.setText(_translate("MainWindow", "Файл с закрытым ключом"))
         self.label_path_text.setText(_translate("MainWindow", "Файл с текстом               "))
         self.button_signature.setText(_translate("MainWindow", "Подписать"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.signarute_frame), _translate("MainWindow", "Подпись файла"))
-        self.label_path_close_key.setText(_translate("MainWindow", "Файл с закрытым ключом      "))
+        self.label_path_open_key.setText(_translate("MainWindow", "Файл с открытым ключом      "))
         self.path_labe_signature_check.setText(_translate("MainWindow", "Файл с подписанным текстом"))
         self.button_check_signature.setText(_translate("MainWindow", "проверка"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.signature_check_page), _translate("MainWindow", "Проверка подписи"))
@@ -250,26 +253,25 @@ class Ui_MainWindow(object):
     def func_check_signature(self):
         path_open_key = self.line_path_close_key.text()
         path_signature = self.line_path_signature_check.text()
-        print(1)
         key = input_key()
-        print(2)
         key.input_open_key(path_open_key)
-        print(3)
         open_exhibitor, multiplication = key.open_key()
-        print(4)
         sig = input_signature()
-        print(5)
         sig.input(path_signature)
-        print(6)
         signature_text = sig.getText()
-        print(7)
-
         signature = sig.getSignaturee()
-        print(8)
+        start = time.time()
+        result = check_signature(open_exhibitor, multiplication, signature_text, signature, path_signature)
+        finish = time.time()
+        time_word = str(finish - start) + "секунд"
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText(result.result_check() + "\nВремя работы:" + time_word)
 
-        check_signature(open_exhibitor, multiplication, signature_text, signature, path_signature)
-        print(9)
-
+        # setting Message box window title
+        msg.setWindowTitle("Проверка на оригинальность")
+        msg.setStandardButtons(QMessageBox.Ok)
+        retval = msg.exec_()
 
     def fun_signature(self):
         path_close_key = self.line_path_open_key.text()
@@ -278,21 +280,42 @@ class Ui_MainWindow(object):
         key = input_key()
         key.input_close_key(path_close_key)
         close_exhibitor, multiplication = key.close_key()
-        signature(text, close_exhibitor, multiplication)
+        start = time.time()
+        signature(text, close_exhibitor, multiplication, path_signature)
+        finish = time.time()
+        time_word = str(finish - start) + "секунд"
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Файл подписан\nВремя работы:" + time_word)
 
+        # setting Message box window title
+        msg.setWindowTitle("Подпись")
+        msg.setStandardButtons(QMessageBox.Ok)
+        retval = msg.exec_()
 
 
     def fun_key_generation(self, my_prime):
         if(my_prime):
             number_pryme = Prime_Number(1024)
             first, second = number_pryme.number()
+            start = time.time()
             key = output_key(first, second)
+            finish = time.time()
+            time_word = str(finish - start) + "секунд"
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Ключи готовы\nВремя работы:" + time_word)
+
+            # setting Message box window title
+            msg.setWindowTitle("Генерация ключей")
+            msg.setStandardButtons(QMessageBox.Ok)
+            retval = msg.exec_()
         else:
             try:
-                print(self.line_input_second_prime.text())
                 first = int(self.line_input_first_prime.text())
                 second = int(self.line_input_second_prime.text())
                 key = output_key(first, second)
+
             except ValueError:
                 print("Ошибка с веденными числами")
 

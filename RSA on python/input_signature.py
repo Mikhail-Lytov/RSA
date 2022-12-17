@@ -14,12 +14,10 @@ class input_signature:
         for element in self.buffer:
             li.append(element)
         li.pop()
-        print(li)
         self.buffer = ''
         for i in li:
             self.buffer += i
 
-        print(self.buffer)
     def getText(self):
         return self.buffer
     def getSignaturee(self):

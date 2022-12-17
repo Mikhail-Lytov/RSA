@@ -20,8 +20,6 @@ class input_key:
             self.close_exhibitor = int(file.readline())
             self.multiplication = int(file.readline())
             file.close()
-            print(self.close_exhibitor)
-            print(self.multiplication)
     def open_key(self):
         return self.open_exhibitor, self.multiplication
 
