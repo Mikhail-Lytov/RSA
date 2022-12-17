@@ -2,7 +2,10 @@ class input_signature:
     buffer = ''
     signature = 0
     def __init__(self):
-        f =open("1.txt", 'r')
+        pass
+
+    def input(self, path):
+        f =open(path, 'r', encoding='UTF-8')
         lines = f.readlines()
         self.signature = int(lines[len(lines) - 1])
         for i in range(0, len(lines) - 1):

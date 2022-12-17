@@ -1,8 +1,8 @@
 from generation_key import generation_key
 
 class output_key:
-    def __init__(self):
-        key = generation_key()
+    def __init__(self, first_prime, second_prime):
+        key = generation_key(first_prime, second_prime)
         open_exhibitor, close_exhibitor, multiplication = key.return_key()
         self.output_open_key(open_exhibitor, multiplication)
         self.output_close_key(close_exhibitor, multiplication)
@@ -19,4 +19,4 @@ class output_key:
         file.close()
 
 if __name__ == "__main__":
-    output_key()
+    output_key(3, 11)

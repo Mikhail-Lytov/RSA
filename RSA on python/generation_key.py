@@ -1,20 +1,22 @@
 import math
 import random
 
+from Cryptodome.Util.number import getPrime
+
 
 class generation_key:
-    first_512 = 2 ** 511
-    second_512 = 2 ** 512 - 1
-    #first_number = random.choice(simple)
-    #second_number = random.choice(simple)
-    first_number = 3557
-    second_number = 2579
-    multiplication = first_number * second_number
-    euler_function = (first_number - 1) * (second_number - 1)
-    open_exhibitor = 3
-    close_exhibitor = 0
+    first_number = 0
+    second_number = 0
+    multiplication = 0
+    euler_function = 0
+    open_exhibitor = getPrime(512)
+    close_exhibitor = 3
 
-    def __init__(self):
+    def __init__(self, second_number, first_number):
+        self.second_number = second_number
+        self.first_number = first_number
+        self.multiplication = first_number * second_number
+        self.euler_function = (first_number - 1) * (second_number - 1)
         self.Open_exhibitor()
         self.Close_exibitor()
 
@@ -31,6 +33,7 @@ class generation_key:
 
 
 if __name__ == "__main__":
-    a = generation_key()
+    a = generation_key(getPrime(1024), getPrime(1024))
+    print((a.open_exhibitor))
     print(a.close_exhibitor)
     print(a.multiplication)
