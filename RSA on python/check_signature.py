@@ -34,19 +34,4 @@ class check_signature:
 
 
 if __name__ == "__main__":
-    from input_key import input_key
-    from input_signature import input_signature
-
-    key = input_key()
-    key.input_open_key("C:/Users/Lytov/PycharmProjects/RSA/RSA on python/open key.txt")
-    open_exhibitor, multiplication = key.open_key()
-
-    sig = input_signature()
-
-    path = "C:/Users/Lytov/PycharmProjects/RSA/RSA on python/1.txt"
-    sig.input(path)
-    signature_text = sig.getText()
-
-    signature = sig.getSignaturee()
-
-    a = check_signature(open_exhibitor, multiplication, signature_text, signature, path)
+    pass

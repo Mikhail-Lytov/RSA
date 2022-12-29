@@ -14,6 +14,3 @@ class input_txt:
 
 
 
-
-
-a = input_txt("C:/Users/Lytov/PycharmProjects/RSA/RSA on python/1.txt")

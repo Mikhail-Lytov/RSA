@@ -29,7 +29,4 @@ class input_key:
 
 
 if __name__ == "__main__":
-    path_close_key = "C:/Users/Lytov/PycharmProjects/RSA/RSA on python/open key.txt"
-    a = input_key()
-    a.input_close_key(path_close_key)
-    close_exhibitor, multiplication = a.close_key()
+    pass
